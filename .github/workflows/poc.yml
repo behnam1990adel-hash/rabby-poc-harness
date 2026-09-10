@@ -14,7 +14,9 @@ jobs:
           git status
           git diff
       - name: Install ts-node
-        run: npm install -g ts-node typescript
+        run: |
+          cd Rabby
+          npm install ts-node typescript --no-save
       - name: Copy harness into Rabby folder
         run: |
           cp run-poc.js Rabby/
