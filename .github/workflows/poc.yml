@@ -1,0 +1,25 @@
+name: Rabby PoC Harness
+on: [push]
+jobs:
+  run-poc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Clone Rabby at exact commit
+        run: |
+          git clone https://github.com/RabbyHub/Rabby.git
+          cd Rabby
+          git checkout f30e7cbf8a8a55fab338074e78eb198a2608fed5
+          git rev-parse HEAD
+          git status
+          git diff
+      - name: Install ts-node
+        run: npm install -g ts-node typescript
+      - name: Copy harness into Rabby folder
+        run: |
+          cp run-poc.js Rabby/
+          cp -r stubs Rabby/
+      - name: Run PoC
+        run: |
+          cd Rabby
+          node run-poc.js
